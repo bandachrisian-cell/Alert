@@ -1,0 +1,91 @@
+/* ---------- Colors: light theme (default) ---------- */
+:root{
+  --paper:#eaf2ff; --paper2:#f6ecff; --card:#ffffff; --field:#ffffff;
+  --ink:#1a2140; --muted:#5b6485; --line:#d3dcf5; --mapbg:#dff3e8;
+  --btn1:#2563eb; --btn2:#7c3aed;           /* button + header gradient (same in both themes) */
+  --low:#15803d; --moderate:#b45309; --high:#c2410c; --critical:#b91c1c; --none:#475569;
+  --s1:#2563eb; --s2:#0d9488; --s3:#ea580c; --s4:#c026d3;  /* dashboard stat colors */
+}
+/* ---------- Dark theme (JS sets data-theme on <html>) ---------- */
+:root[data-theme="dark"]{
+  --paper:#0d1026; --paper2:#1a1040; --card:#181d3d; --field:#10142e;
+  --ink:#eef0ff; --muted:#a8b0d6; --line:#2c3470; --mapbg:#16283d;
+  --s1:#7aa2ff; --s2:#2dd4bf; --s3:#fb923c; --s4:#e879f9;
+}
+/* Alert levels: each class sets --c, which cards, tags, banner and map zones use */
+.lv0{--c:var(--none)} .lv1{--c:var(--low)} .lv2{--c:var(--moderate)} .lv3{--c:var(--high)} .lv4{--c:var(--critical)}
+
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:var(--ink);line-height:1.5;
+  background:linear-gradient(160deg,var(--paper),var(--paper2)) fixed}
+h1{font-size:1.25rem;margin:0} h2{font-size:1.2rem;margin:22px 0 10px} h3{font-size:1.05rem;margin:0 0 4px}
+main{max-width:860px;margin:0 auto;padding:0 16px 24px}
+
+/* ---------- Role-based visibility (JS sets body[data-role]) ---------- */
+body[data-role="guest"] .admin-only, body[data-role="guest"] .resident-only, body[data-role="guest"] .user-only,
+body[data-role="resident"] .admin-only, body[data-role="admin"] .resident-only{display:none !important}
+.hidden{display:none !important}
+
+/* ---------- Header, banner, tabs ---------- */
+.top{background:linear-gradient(110deg,#0d9488,var(--btn1) 50%,var(--btn2));color:#fff;padding:12px 16px;
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+.who{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.banner{background:var(--c);color:#fff;text-align:center;font-weight:600;padding:10px 16px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;max-width:860px;margin:14px auto 0;padding:0 16px}
+.tab{padding:7px 14px;border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.tab:hover{border-color:var(--btn1)}
+.tab.active{background:linear-gradient(110deg,var(--btn1),var(--btn2));border-color:transparent;color:#fff}
+.toast{position:fixed;right:16px;bottom:16px;max-width:320px;background:var(--c);color:#fff;padding:12px 16px;border-radius:10px;z-index:10;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+
+/* ---------- Forms and buttons ---------- */
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+label{display:block;margin-top:10px;font-weight:600}
+input,select,textarea{display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);font:inherit;font-weight:400}
+.row > input,.row > select{margin-top:0}
+input[type=checkbox],input[type=radio]{display:inline-block;width:20px;height:20px;margin:0 8px 0 0;vertical-align:middle;accent-color:var(--btn1)}
+.btn{display:inline-block;margin-top:10px;padding:9px 18px;border:0;border-radius:99px;background:linear-gradient(110deg,var(--btn1),var(--btn2));color:#fff;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.1)}
+.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:var(--critical);color:#fff}
+.btn.small{margin-top:0;padding:4px 12px;font-weight:400}
+:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}
+.error{color:#ef4444;font-weight:600;min-height:1.4em;margin:8px 0 0}
+
+/* ---------- Lists and cards ---------- */
+.list,.checks{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px}
+.list > .card{margin-top:0}
+li.card{border-left:8px solid var(--c,var(--btn1))}
+.card p{margin:4px 0}
+.meta{color:var(--muted);font-size:.9rem}
+.empty{color:var(--muted);font-style:italic}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tag{display:inline-block;padding:1px 10px;border-radius:99px;background:var(--c,var(--btn1));color:#fff;font-size:.8rem;font-weight:600}
+.num{float:right;font-size:1.4rem;font-weight:700;color:var(--s2)}
+summary{cursor:pointer;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-top:6px solid var(--s1);border-radius:12px;padding:12px}
+.stat:nth-child(2){border-top-color:var(--s2)} .stat:nth-child(3){border-top-color:var(--s3)} .stat:nth-child(4){border-top-color:var(--s4)}
+.stat b{display:block;font-size:1.8rem;color:var(--s1)}
+.stat:nth-child(2) b{color:var(--s2)} .stat:nth-child(3) b{color:var(--s3)} .stat:nth-child(4) b{color:var(--s4)}
+li.card select{width:auto;display:inline-block}
+
+/* ---------- Go-bag ---------- */
+.checks li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.checks li.done label{text-decoration:line-through;color:var(--muted)}
+.checks label{margin:0;font-weight:400}
+.progress{height:16px;background:var(--line);border-radius:99px;overflow:hidden}
+#bag-bar{height:100%;width:0;background:linear-gradient(90deg,#0d9488,#22c55e);transition:width .3s}
+
+/* ---------- Quiz ---------- */
+fieldset{border:1px solid var(--line);border-radius:10px;margin:0 0 12px;padding:8px 12px 12px}
+legend{font-weight:700;padding:0 6px}
+.opt{margin-top:6px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-weight:400;cursor:pointer}
+.opt:hover{border-color:var(--btn1)}
+.right{color:var(--s2)} .wrong{color:var(--s3)}
+
+/* ---------- Map ---------- */
+.map{position:relative;z-index:0;height:380px;border:1px solid var(--line);border-radius:12px;background:var(--mapbg)}
+
+.foot{text-align:center;color:var(--muted);font-size:.85rem;padding:16px}
+@media (prefers-reduced-motion:reduce){#bag-bar{transition:none}}
